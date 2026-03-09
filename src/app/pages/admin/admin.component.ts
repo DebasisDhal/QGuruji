@@ -32,6 +32,7 @@ export class AdminComponent implements OnInit{
     }
   }
 
+  onCall(data){}
   
 
 }

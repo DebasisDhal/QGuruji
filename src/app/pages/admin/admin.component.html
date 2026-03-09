@@ -37,7 +37,7 @@
               <td>{{i.patientName}}</td>
               <td>{{i.generatedAt}}</td>
               <td><span class="badge waiting">{{i.status}}</span></td>
-              <td><button class="action-btn">Call</button></td>
+              <td><button class="action-btn" (click)="onCall(i.id)">Call</button></td>
             </tr>
           
           </tbody>
