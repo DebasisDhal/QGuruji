@@ -1,0 +1,77 @@
+<div class="maincontainer">
+
+
+
+  <!-- Header -->
+  <header class="topbar">
+    <div class="clinic-name">City Care Clinic</div>
+    <div class="date-time">14 Feb 2026 | 10:30 AM</div>
+    <div class="user-info">
+      Admin
+      <button class="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Layout -->
+  <div class="container">
+
+    <!-- LEFT SIDE - Queue Table -->
+    <div class="queue-section">
+      <h2>Patient Queue</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Doctor / Service</th>
+              <th>Patient</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of hospitals.patients">
+              <td>T-{{i.tokenNo}}</td>
+              <td>{{i.doctorId}}</td>
+              <td>{{i.patientName}}</td>
+              <td>{{i.generatedAt}}</td>
+              <td><span class="badge waiting">{{i.status}}</span></td>
+              <td><button class="action-btn">Call</button></td>
+            </tr>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE - Control Panel -->
+    <div class="control-section">
+      <div class="card highlight-card">
+        <h3>Now Consulting</h3>
+        <p class="token">T02</p>
+        <p>Sita</p>
+        <p>10:08 AM</p>
+      </div>
+
+      <button class="call-next-btn">CALL NEXT TOKEN</button>
+
+      <div class="stats">
+        <div class="stat-card">
+          <h4>Total</h4>
+          <p>25</p>
+        </div>
+        <div class="stat-card">
+          <h4>Waiting</h4>
+          <p>5</p>
+        </div>
+        <div class="stat-card">
+          <h4>Done</h4>
+          <p>19</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
