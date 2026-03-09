@@ -1,6 +1,6 @@
 
 <div class="app-container">
-    <div class="sidebar" *ngIf="!isFullscreen">
+    <div class="sidebar" *ngIf="isFullscreen">
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100" style="width: 280px;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
@@ -13,12 +13,6 @@
                 <a  class="nav-link text-white " routerLink="/layout/admin" routerLinkActive="active" aria-current="page">
                   <svg class="bi me-2" width="16" height="16"><use></use></svg>
                   Home
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a  class="nav-link text-white " routerLink="/layout/demo" routerLinkActive="active" aria-current="page">
-                  <svg class="bi me-2" width="16" height="16"><use></use></svg>
-                  Demo
                 </a>
               </li>
               <li>
