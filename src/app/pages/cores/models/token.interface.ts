@@ -8,3 +8,16 @@ export interface ITokenModel {
   status: string;
   validUntil: string;
 }
+
+
+export interface Patient {
+  id: string;
+  tokenNo: number;
+  status: string;
+  phone: string;
+  doctorId: string;
+  patientName: string;
+  validUntil: string;   // or Date
+  hospitalId: string;
+  generatedAt: number;
+}

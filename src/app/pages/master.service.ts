@@ -2,7 +2,7 @@ import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { addDoc, collection, collectionData, CollectionReference, doc, docData, Firestore, getDoc, getDocs, orderBy, query } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, CollectionReference, doc, docData, DocumentData, DocumentReference, Firestore, getDoc, getDocs, orderBy, query, updateDoc } from '@angular/fire/firestore';
 
 
 @Injectable({
@@ -65,6 +65,14 @@ async getHospitalCompleteData() {
   };
 }
 
+updateStatus(patientId:string,status:any){
+   const patientRef = doc(this.firestore, `Hospitals/Hospital_1/Patients/${patientId}`)
 
+   return updateDoc(patientRef,{
+    status: status
+   });
+}
 
 }
+
+

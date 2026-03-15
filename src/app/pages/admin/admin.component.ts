@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterService } from '../master.service';
+import { Patient } from '../cores/models/token.interface';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit{
+export class AdminComponent implements OnInit {
   hospitals: any;
+  onCallData?: Patient;
+  constructor(private master: MasterService) {
 
-  constructor(private master: MasterService){
-    
   }
 
   ngOnInit(): void {
@@ -23,16 +24,55 @@ export class AdminComponent implements OnInit{
   //   })
   // }
 
-     async loadHospitalData() {
+  async loadHospitalData() {
     try {
       this.hospitals = await this.master.getHospitalCompleteData();
-      console.log('All Hospitals:', this.hospitals);
+      this.onCallData = this.hospitals.patients[0];
+      console.log('All Hospit:', this.hospitals);
+      console.log('All Hospitals:', [this.onCallData]);
     } catch (error) {
       console.error('Error fetching hospital data:', error);
     }
   }
 
-  onCall(data){}
-  
+  onCall(patientsId) {
 
+    const currentLive = this.hospitals.patients.find(
+      (x: Patient) => x.status === 'Live'
+    );
+    if (currentLive) {
+      currentLive.status = 'Pending';
+      this.master.updateStatus(currentLive.id, 'Pending');
+    }
+
+    const selectedPatient = this.hospitals.patients.find(
+      (x: Patient) => x.id === patientsId
+    );
+
+    if (selectedPatient) {
+      selectedPatient.status = 'Live';
+      this.master.updateStatus(selectedPatient.id, 'Live');
+      this.onCallData = selectedPatient;
+    }
+  }
+
+  onLogout() {
+    localStorage.removeItem("isFullScreen");
+  }
+
+  markDone() {
+    if (this.onCallData) {
+
+      this.onCallData.status = 'Done';
+      this.master.updateStatus(this.onCallData.id, this.onCallData.status);
+this.loadHospitalData();
+    }
+  }
+  markPending() {
+    if (this.onCallData) {
+      this.onCallData.status = 'Pending';
+      this.master.updateStatus(this.onCallData.id, this.onCallData.status);
+      this.loadHospitalData();
+    }
+  }
 }

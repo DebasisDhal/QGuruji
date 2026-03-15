@@ -1,27 +1,27 @@
-  <div class="container">
-    <div class="header">
-      <h1>Current Token Information</h1>
-    </div>
-    
-    <div class="token-info">
-      <div class="info-box">
-        <h2>Token No:</h2>
-        <p id="tokenNumber">#12345</p>
-      </div>
-      <div class="info-box">
-        <h2>Current Time:</h2>
-        <p id="currentTime">12:45 PM</p>
-      </div>
-      <div class="info-box">
-        <h2>Patient Name:</h2>
-        <p id="patientName">John Doe</p>
-      </div>
-    </div>
-
-    <div class="important-message">
-      <p id="importantMsg">Important: Please wait for your token to be called.</p>
-    </div>
-
-    <button class="fullscreen-btn" id="fullscreenBtn" (click)="onClick()">Go Fullscreen</button>
-
+<div class="container">
+  <div class="header">
+    <h1>Current Token Information</h1>
   </div>
+
+  <div class="token-info">
+    <div class="info-box">
+      <h2>Token No:</h2>
+      <p id="tokenNumber">#{{this.onCallData?.tokenNo}}</p>
+    </div>
+    <div class="info-box">
+      <h2>Current Time:</h2>
+      <p id="currentTime">12:45 PM</p>
+    </div>
+    <div class="info-box">
+      <h2>Patient Name:</h2>
+      <p id="patientName">{{this.onCallData?.patientName}}</p>
+    </div>
+  </div>
+
+  <div class="important-message">
+    <p id="importantMsg">Important: Please wait for your token to be called.</p>
+  </div>
+
+  <button class="fullscreen-btn" id="fullscreenBtn" (click)="onClick()">Go Fullscreen</button>
+
+</div>

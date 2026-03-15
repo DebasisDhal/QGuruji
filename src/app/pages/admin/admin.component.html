@@ -8,7 +8,7 @@
     <div class="date-time">14 Feb 2026 | 10:30 AM</div>
     <div class="user-info">
       Admin
-      <button class="logout-btn">Logout</button>
+      <button class="logout-btn" (click)="onLogout()">Logout</button>
     </div>
   </header>
 
@@ -31,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let i of hospitals.patients">
+            <tr *ngFor="let i of hospitals?.patients">
               <td>T-{{i.tokenNo}}</td>
               <td>{{i.doctorId}}</td>
               <td>{{i.patientName}}</td>
@@ -39,7 +39,7 @@
               <td><span class="badge waiting">{{i.status}}</span></td>
               <td><button class="action-btn" (click)="onCall(i.id)">Call</button></td>
             </tr>
-          
+
           </tbody>
         </table>
       </div>
@@ -48,14 +48,20 @@
     <!-- RIGHT SIDE - Control Panel -->
     <div class="control-section">
       <div class="card highlight-card">
-        <h3>Now Consulting</h3>
-        <p class="token">T02</p>
-        <p>Sita</p>
+        <h3>Now Consulting </h3>
+
+        <p class="token">T - {{ onCallData?.tokenNo }}</p>
+
+        <p>{{onCallData?.patientName}}</p>
         <p>10:08 AM</p>
+        <p style="color: rgb(0, 255, 34);font-weight: bold;">{{onCallData?.status}}</p>
       </div>
 
-      <button class="call-next-btn">CALL NEXT TOKEN</button>
-
+      <div class="col-cmd-3" style="align-items: center; text-align: center; gap: 10px;">
+        <button class="btn btn-success call-done" style="gap: 10px; margin-left: 3px;" (click)=markDone()>Done</button>
+        <button class="btn btn-warning call-pending" (click)=markPending()>Pending</button>
+        <!-- <button class="call-next-btn">CALL NEXT TOKEN</button> -->
+      </div>
       <div class="stats">
         <div class="stat-card">
           <h4>Total</h4>
