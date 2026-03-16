@@ -10,6 +10,11 @@ import { Patient } from '../cores/models/token.interface';
 export class AdminComponent implements OnInit {
   hospitals: any;
   onCallData?: Patient;
+  total:number;
+  pending:number;
+  done:number;
+  patientData: any;
+
   constructor(private master: MasterService) {
 
   }
@@ -27,8 +32,15 @@ export class AdminComponent implements OnInit {
   async loadHospitalData() {
     try {
       this.hospitals = await this.master.getHospitalCompleteData();
+      this.patientData = this.hospitals?.patients;
       this.onCallData = this.hospitals.patients[0];
-      console.log('All Hospit:', this.hospitals);
+      this.total = this.hospitals.patients.length;
+      this.pending = this.hospitals.patients.filter(
+      (x: Patient) => x.status === 'Pending').length;
+      this.done = this.hospitals.patients.filter(
+      (x: Patient) => x.status === 'Done').length;
+      console.log('All Hospit:', this.done);
+      console.log('All Hospit:', this.pending);
       console.log('All Hospitals:', [this.onCallData]);
     } catch (error) {
       console.error('Error fetching hospital data:', error);
@@ -74,5 +86,17 @@ this.loadHospitalData();
       this.master.updateStatus(this.onCallData.id, this.onCallData.status);
       this.loadHospitalData();
     }
+  }
+  totalData(){
+      //   this.hospitals = this.hospitals.patients.find(
+      // (x: Patient) => x.status === 'Live');
+  }
+  waitingData(){
+      //    this.hospitals = this.hospitals.patients.find(
+      // (x: Patient) => x.status === 'Pending');
+  }
+  doneData(){
+      //    this.hospitals = this.hospitals.patients.find(
+      // (x: Patient) => x.status === '');
   }
 }
