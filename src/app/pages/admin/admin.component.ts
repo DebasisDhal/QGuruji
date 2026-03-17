@@ -14,6 +14,7 @@ export class AdminComponent implements OnInit {
   pending:number;
   done:number;
   patientData: any;
+  modifyData: any;
 
   constructor(private master: MasterService) {
 
@@ -88,15 +89,20 @@ this.loadHospitalData();
     }
   }
   totalData(){
-      //   this.hospitals = this.hospitals.patients.find(
-      // (x: Patient) => x.status === 'Live');
-  }
-  waitingData(){
-      //    this.hospitals = this.hospitals.patients.find(
-      // (x: Patient) => x.status === 'Pending');
+        this.modifyData = this.hospitals.patients;
+      
+    }
+    waitingData(){
+      this.modifyData = this.hospitals.patients.filter(
+        (x: Patient) => x.status === 'Pending');
+      console.log(this.modifyData,"modifyData");
   }
   doneData(){
-      //    this.hospitals = this.hospitals.patients.find(
-      // (x: Patient) => x.status === '');
+         this.modifyData = this.hospitals.patients.filter(
+      (x: Patient) => x.status === 'Done');
   }
+
+  get patientList() {
+  return  this.modifyData ||this.hospitals?.patients || [];
+}
 }
