@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MasterService } from '../master.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { doc, docData, Firestore, serverTimestamp } from '@angular/fire/firestore';
@@ -40,7 +40,7 @@ export class HomepageComponent implements OnInit {
 }
 
   tokenForm:FormGroup  = new FormGroup({
-    patientName: new FormControl(''),
+    patientName: new FormControl('',Validators.required),
     phone: new FormControl(''),
     doctorId: new FormControl(0),
     tokenNo:new FormControl(0),
@@ -50,7 +50,9 @@ export class HomepageComponent implements OnInit {
     validUntil: new FormControl('')
   });
 
- generateTokenData():ITokenModel{
+ generateTokenData():ITokenModel | any{
+  if(this.tokenForm.valid){
+
      const tokenNo = ++this.lastTokenNo;
      this.generatedToken = tokenNo;
      const generatedAt = Date.now();
@@ -63,6 +65,9 @@ export class HomepageComponent implements OnInit {
       status:'Generated',
       validUntil
     }
+  }else{
+    this.tokenForm.markAllAsTouched();
+  }
  }
 
   onGenerateToken(){

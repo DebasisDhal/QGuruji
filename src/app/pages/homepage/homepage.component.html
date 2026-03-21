@@ -3,7 +3,7 @@
   <header class="header">
     <h1>ABC Clinic</h1>
     <p class="subhead">Take a Token</p>
-    <button (click)="onLogin()">Login</button>
+    <button class="btn btn-secondary" (click)="onLogin()">Login</button>
   </header>
 
   <main class="main">
@@ -22,6 +22,12 @@
             class="form-control"
             formControlName="patientName"
           />
+          <div *ngIf="tokenForm.get('patientName')?.touched && tokenForm.get('patientName')?.invalid">
+
+            <small *ngIf="tokenForm.get('patientName')?.errors?.['required'] ">
+    Name is required !
+  </small>
+          </div>
         </div>
 
         <!-- Mobile Number (India) -->
@@ -37,6 +43,12 @@
             class="form-control"
             formControlName = 'phone'
           />
+                    <div *ngIf="tokenForm.get('phone')?.touched && tokenForm.get('phone')?.invalid">
+
+            <small *ngIf="tokenForm.get('phone')?.errors?.['required'] ">
+    Phone is required !
+  </small>
+          </div>
         </div>
 
         <!-- Doctor / Service -->
@@ -48,13 +60,14 @@
             <option value="Dr. Patel – Pediatrics">Dr. Patel – Pediatrics</option>
             <option value="Laboratory Test">Laboratory Test</option>
             <option value="Vaccination">Vaccination</option>
+            <option value="Other">Others</option>
           </select>
+          
         </div>
 
         <!-- Submit button -->
         <button
           type="submit"
-         
           class="btn-submit" (click)="onGenerateToken()"
         >
           Generate Token

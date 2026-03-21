@@ -173,6 +173,7 @@ tr:not(:last-child) {
 .stats {
   display: flex;
   gap: 10px;
+  cursor: pointer;
 }
 
 .stat-card {
@@ -210,4 +211,23 @@ tr:not(:last-child) {
   .highlight-card .token {
     font-size: 24px;
   }
+}
+
+.table-wrapper {
+  max-height: 586px;   /* set height as needed */
+  overflow-y: auto;    /* vertical scroll */
+  border: 1px solid #ddd;
+}
+
+/* Optional: keep header fixed */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 2;
 }

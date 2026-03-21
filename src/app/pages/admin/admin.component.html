@@ -8,7 +8,7 @@
     <div class="date-time">14 Feb 2026 | 10:30 AM</div>
     <div class="user-info">
       Admin
-      <button class="logout-btn" (click)="onLogout()">Logout</button>
+      <button class="logout-btn"  routerLink="/"  (click)="onLogout()">Logout</button>
     </div>
   </header>
 
@@ -17,7 +17,18 @@
 
     <!-- LEFT SIDE - Queue Table -->
     <div class="queue-section">
-      <h2>Patient Queue</h2>
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h2>Patient Queue</h2>
+    
+        <div class="d-flex gap-2">
+          <input type="date" placeholder="Filter Date wise" class="form-control" (change)="onDateFilter()" [(ngModel)]="dateFilter">
+        </div>
+        <div class="d-flex gap-2">
+          <input type="text" placeholder="Name and Token No" class="form-control" [(ngModel)]="search">
+  
+          <button class="btn btn-primary" (click)="onSearch()">Search</button>
+        </div>
+      </div>
       <div class="table-wrapper">
         <table>
           <thead>
@@ -35,7 +46,7 @@
               <td>T-{{i.tokenNo}}</td>
               <td>{{i.doctorId}}</td>
               <td>{{i.patientName}}</td>
-              <td>{{i.generatedAt}}</td>
+              <td>{{i.generatedAt | date:'dd/MM/yyyy hh:mm a'}}</td>
               <td><span class="badge waiting">{{i.status}}</span></td>
               <td><button class="action-btn" (click)="onCall(i.id)">Call</button></td>
             </tr>

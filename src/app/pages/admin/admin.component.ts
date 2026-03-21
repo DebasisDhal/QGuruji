@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MasterService } from '../master.service';
 import { Patient } from '../cores/models/token.interface';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
   hospitals: any;
@@ -15,6 +17,8 @@ export class AdminComponent implements OnInit {
   done:number;
   patientData: any;
   modifyData: any;
+  search:any;
+  dateFilter:any;
 
   constructor(private master: MasterService) {
 
@@ -71,6 +75,7 @@ export class AdminComponent implements OnInit {
 
   onLogout() {
     localStorage.removeItem("isFullScreen");
+    
   }
 
   markDone() {
@@ -89,8 +94,7 @@ this.loadHospitalData();
     }
   }
   totalData(){
-        this.modifyData = this.hospitals.patients;
-      
+        this.modifyData = this.hospitals.patients;  
     }
     waitingData(){
       this.modifyData = this.hospitals.patients.filter(
@@ -104,5 +108,28 @@ this.loadHospitalData();
 
   get patientList() {
   return  this.modifyData ||this.hospitals?.patients || [];
+}
+
+onSearch(){
+  if(this.search == ''){
+    this.totalData();
+  }else{
+    const value = this.search.toLowerCase();
+    this.modifyData = this.hospitals.patients.filter((x:Patient)=>
+      x.patientName.toLowerCase().includes(value) ||
+          x.tokenNo.toString().includes(value) );
+  }
+}
+
+onDateFilter(){
+  const value = this.dateFilter;
+  console.log(value,"VAlue");
+  
+  this.modifyData = this.hospitals.patients.filter((x:Patient)=>{
+    const date = new Date(x.generatedAt);
+    const formattedDate = date.toISOString().split('T')[0]
+   return formattedDate === value;
+
+  })
 }
 }
