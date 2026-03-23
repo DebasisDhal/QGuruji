@@ -14,40 +14,26 @@
         <!-- Patient Name -->
         <div class="form-group">
           <label for="patientName">Patient Name</label>
-          <input
-            id="patientName"
-            type="text"
-            name="patientName"
-            required
-            class="form-control"
-            formControlName="patientName"
-          />
+          <input id="patientName" type="text" name="patientName" required class="form-control"
+            formControlName="patientName" />
           <div *ngIf="tokenForm.get('patientName')?.touched && tokenForm.get('patientName')?.invalid">
 
             <small *ngIf="tokenForm.get('patientName')?.errors?.['required'] ">
-    Name is required !
-  </small>
+              Name is required !
+            </small>
           </div>
         </div>
 
         <!-- Mobile Number (India) -->
         <div class="form-group">
           <label for="phone">Mobile Number (India)</label>
-          <input
-            id="phone"
-            type="tel"
-            name="phone"
-            required
-            pattern="^[6-9]\d{9}$"
-            placeholder="98XXXXXX01"
-            class="form-control"
-            formControlName = 'phone'
-          />
-                    <div *ngIf="tokenForm.get('phone')?.touched && tokenForm.get('phone')?.invalid">
+          <input id="phone" type="tel" name="phone" required pattern="^[6-9]\d{9}$" placeholder="98XXXXXX01"
+            class="form-control" formControlName='phone' />
+          <div *ngIf="tokenForm.get('phone')?.touched && tokenForm.get('phone')?.invalid">
 
             <small *ngIf="tokenForm.get('phone')?.errors?.['required'] ">
-    Phone is required !
-  </small>
+              Phone is required !
+            </small>
           </div>
         </div>
 
@@ -62,14 +48,10 @@
             <option value="Vaccination">Vaccination</option>
             <option value="Other">Others</option>
           </select>
-          
         </div>
 
         <!-- Submit button -->
-        <button
-          type="submit"
-          class="btn-submit" (click)="onGenerateToken()"
-        >
+        <button type="submit" class="btn-submit" (click)="onGenerateToken()">
           Generate Token
         </button>
       </form>

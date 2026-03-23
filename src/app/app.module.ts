@@ -15,6 +15,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { TokenComponent } from './pages/token/token.component';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { TokenComponent } from './pages/token/token.component';
     HomepageComponent,
     AdminComponent,
     LayoutComponent,
-    TokenComponent
+    TokenComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

@@ -5,12 +5,17 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { LayoutComponent } from './pages/layout/layout.component';
 import { Token } from '@angular/compiler';
 import { TokenComponent } from './pages/token/token.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const routes: Routes = [
 
   {
     path: '',
     component: HomepageComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'layout',

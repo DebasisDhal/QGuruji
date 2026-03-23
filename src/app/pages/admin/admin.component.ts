@@ -12,13 +12,14 @@ import { CommonModule } from '@angular/common';
 export class AdminComponent implements OnInit {
   hospitals: any;
   onCallData?: Patient;
-  total:number;
-  pending:number;
-  done:number;
+  total: number;
+  pending: number;
+  done: number;
   patientData: any;
   modifyData: any;
-  search:any;
-  dateFilter:any;
+  search: any;
+  dateFilter: any;
+  initialData: any;
 
   constructor(private master: MasterService) {
 
@@ -41,15 +42,16 @@ export class AdminComponent implements OnInit {
       this.onCallData = this.hospitals.patients[0];
       this.total = this.hospitals.patients.length;
       this.pending = this.hospitals.patients.filter(
-      (x: Patient) => x.status === 'Pending').length;
+        (x: Patient) => x.status === 'Pending').length;
       this.done = this.hospitals.patients.filter(
-      (x: Patient) => x.status === 'Done').length;
-      console.log('All Hospit:', this.done);
-      console.log('All Hospit:', this.pending);
-      console.log('All Hospitals:', [this.onCallData]);
+        (x: Patient) => x.status === 'Done').length;
+      // console.log('All Hospit:', this.done);
+      // console.log('All Hospit:', this.pending);
+      // console.log('All Hospitals:', [this.onCallData]);
     } catch (error) {
       console.error('Error fetching hospital data:', error);
     }
+    this.loadData();
   }
 
   onCall(patientsId) {
@@ -75,7 +77,7 @@ export class AdminComponent implements OnInit {
 
   onLogout() {
     localStorage.removeItem("isFullScreen");
-    
+
   }
 
   markDone() {
@@ -83,7 +85,7 @@ export class AdminComponent implements OnInit {
 
       this.onCallData.status = 'Done';
       this.master.updateStatus(this.onCallData.id, this.onCallData.status);
-this.loadHospitalData();
+      this.loadHospitalData();
     }
   }
   markPending() {
@@ -93,43 +95,55 @@ this.loadHospitalData();
       this.loadHospitalData();
     }
   }
-  totalData(){
-        this.modifyData = this.hospitals.patients;  
-    }
-    waitingData(){
-      this.modifyData = this.hospitals.patients.filter(
-        (x: Patient) => x.status === 'Pending');
-      console.log(this.modifyData,"modifyData");
+  totalData() {
+    this.modifyData = this.hospitals.patients;
   }
-  doneData(){
-         this.modifyData = this.hospitals.patients.filter(
+  waitingData() {
+    this.modifyData = this.hospitals.patients.filter(
+      (x: Patient) => x.status === 'Pending');
+    console.log(this.modifyData, "modifyData");
+  }
+  doneData() {
+    this.modifyData = this.hospitals.patients.filter(
       (x: Patient) => x.status === 'Done');
   }
 
-  get patientList() {
-  return  this.modifyData ||this.hospitals?.patients || [];
-}
+  loadData() {
+    const data = this.patientData;
+    const todayStr = new Date().toDateString();
 
-onSearch(){
-  if(this.search == ''){
-    this.totalData();
-  }else{
-    const value = this.search.toLowerCase();
-    this.modifyData = this.hospitals.patients.filter((x:Patient)=>
-      x.patientName.toLowerCase().includes(value) ||
-          x.tokenNo.toString().includes(value) );
+    this.initialData = data.filter((item: any) => {
+      return (
+        new Date(item.generatedAt).toDateString() === todayStr &&
+        item.status !== 'Done'
+      );
+    });
   }
-}
 
-onDateFilter(){
-  const value = this.dateFilter;
-  console.log(value,"VAlue");
-  
-  this.modifyData = this.hospitals.patients.filter((x:Patient)=>{
-    const date = new Date(x.generatedAt);
-    const formattedDate = date.toISOString().split('T')[0]
-   return formattedDate === value;
+  get patientList() {
+    return this.modifyData || this.initialData || this.hospitals?.patients || [];
+  }
 
-  })
-}
+  onSearch() {
+    if (this.search == '') {
+      this.totalData();
+    } else {
+      const value = this.search.toLowerCase();
+      this.modifyData = this.hospitals.patients.filter((x: Patient) =>
+        x.patientName.toLowerCase().includes(value) ||
+        x.tokenNo.toString().includes(value));
+    }
+  }
+
+  onDateFilter() {
+    const value = this.dateFilter;
+    console.log(value, "VAlue");
+
+    this.modifyData = this.hospitals.patients.filter((x: Patient) => {
+      const date = new Date(x.generatedAt);
+      const formattedDate = date.toISOString().split('T')[0]
+      return formattedDate === value;
+
+    })
+  }
 }

@@ -70,12 +70,44 @@ export class HomepageComponent implements OnInit {
   }
  }
 
-  onGenerateToken(){
-    this.showTokenResult = true;
-    console.log(this.tokenForm.value);
-    const tokenData = this.generateTokenData();
-    this.masterService.createPatient(tokenData);
+onGenerateToken() {
+  // ✅ force validation to show
+  if (this.tokenForm.invalid) {
+    this.tokenForm.markAllAsTouched();
+    return;
   }
+
+  const phoneValue = this.tokenForm.get('phone')?.value?.trim();
+
+  if (!phoneValue) {
+    alert("Please enter phone number");
+    return;
+  }
+
+  const today = new Date();
+
+  const existingPatient = this.hospitalData.patients.find((patient: any) => {
+    const patientDate = new Date(patient.generatedAt);
+
+    return (
+      patient.phone?.toString() === phoneValue.toString() &&
+      patientDate.getDate() === today.getDate() &&
+      patientDate.getMonth() === today.getMonth() &&
+      patientDate.getFullYear() === today.getFullYear()
+    );
+  });
+
+  if (existingPatient) {
+    alert("Token already generated for this mobile today");
+    return;
+  }
+
+  this.showTokenResult = true;
+
+  const tokenData = this.generateTokenData();
+  this.masterService.createPatient(tokenData);
+  this.allData();
+}
 
  async allData(){
    this.hospitalData = await this.masterService.getHospitalCompleteData();
@@ -88,7 +120,7 @@ export class HomepageComponent implements OnInit {
    
   }
   onLogin(){
-    this.router.navigate(['/layout']);
+    this.router.navigate(['/login']);
   }
 
 }
